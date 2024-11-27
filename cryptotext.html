@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Message Box</title>
-    <link rel="stylesheet" href="cryptotext.css">
-</head>
-<body>
+    <link rel="stylesheet" href="cryptotext.css" />
+  </head>
+  <body>
     <div class="container">
-        <div class="message-box">
-            <input type="text" placeholder="YOUR MESSAGE" class="message-input">
-            <button class="send-button">Send</button>
+      <h1 class="heading">Encryption</h1>
+      <div class="input-box">
+        <input type="text" placeholder="YOUR MESSAGE" class="message-input" />
+        <button class="send-button" onclick="encryptMessage()">Send</button>
+      </div>
+
+      <div class="output-box">
+        <textarea
+          class="output"
+          placeholder="OUTPUT MESSAGE"
+          readonly
+        ></textarea>
+        <input
+          class="key-output"
+          placeholder="KEY"
+          type="password"
+          readonly
+        ></input>
+        <div class="function-buttons">
+          <button class="show-button" onclick="show()">Show Key</button>
+          <button class="copy-text" onclick="copyText()">Copy Text</button>
+          <button class="copy-key" onclick="copyKey()">Copy Key</button>
         </div>
+      </div>
     </div>
     <div class="asdf">
-        <a href="cryptohome.html" class="back-button">Back</button>
+      <a href="cryptohome.html" class="back-button">Back</a>
     </div>
-    <footer class="footer">
-        &copy; Cryptography work
-    </footer>
-</body>
+    <footer class="footer">&copy; Cryptography work</footer>
+    <script src="encrypt.js"></script>
+  </body>
 </html>

@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Decode Page</title>
-    <!-- Link to the external CSS file -->
-    <link rel="stylesheet" href="cryptodecode.css">
-</head>
-<body>
+    <link rel="stylesheet" href="cryptodecode.css" />
+  </head>
+  <body>
+    <h1 class="heading">Decryption</h1>
+
     <div class="container">
-        <div class="box">
-            <input type="text" placeholder="YOUR ENCRYPTED MESSAGE">
-            <button >DECODE</button>
-            
-        </div>
+      <div class="input-box">
+        <input
+          type="text"
+          placeholder="YOUR ENCRYPTED MESSAGE"
+          class="encrypted-message-input"
+        />
+        <input type="text" placeholder="YOUR KEY" class="key-input" />
+        <button class="send-button" onclick="decryptMessage()">Decrypt</button>
+      </div>
+
+      <div class="output-box">
+        <textarea
+          class="output"
+          placeholder="OUTPUT MESSAGE"
+          readonly
+        ></textarea>
+      </div>
     </div>
     <div class="asdf">
-        <a href="cryptohome.html"  class="back-button">BACK</button>
+      <a href="cryptohome.html" class="back-button">Back</a>
     </div>
-    <footer class="footer">
-        &copy; Cryptography work
-    </footer>
-</body>
+    <footer class="footer">&copy; Cryptography work</footer>
+    <script src="decrypt.js"></script>
+  </body>
 </html>

@@ -1,37 +1,39 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from cryptography.fernet import Fernet
 
-key = Fernet.generate_key()
-cipher = Fernet(key)
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
-def encrypt_message(message: str) -> str:
+
+@app.route('/encrypt', methods=['POST'])
+def encrypt_message():
+    key = Fernet.generate_key()
+    cipher = Fernet(key)
     """Encrypt the message using the shared secret key."""
+    data = request.json
+    message = data.get('message')
+    if not message:
+        return jsonify({'error': 'No message provided'}), 400
     encrypted_message = cipher.encrypt(message.encode())
-    return encrypted_message.decode() 
+    return jsonify({'encrypted_message': encrypted_message.decode(), 'key': key.decode()})
 
-def decrypt_message(encrypted_message: str) -> str:
+
+@app.route('/decrypt', methods=['POST'])
+def decrypt_message():
     """Decrypt the encrypted message using the shared secret key."""
+    data = request.json
+    encrypted_message = data.get('encrypted_message')
+    key = data.get('key')
+    cipher = Fernet(key)
+    if not encrypted_message:
+        return jsonify({'error': 'No encrypted message provided'}), 400
     try:
         decrypted_message = cipher.decrypt(encrypted_message.encode())
-        return decrypted_message.decode()
+        return jsonify({'decrypted_message': decrypted_message.decode()})
     except Exception as e:
-        return f"Error decrypting message: {e}"
+        return jsonify({'error': f"Error decrypting message: {e}"}), 400
 
-print("=== Cryptographic Communication ===")
-choice = int(input("1 for Encrypt a message, 2 for Decrypt a message: "))
 
-if choice == 1:
-    message = input("Enter your message to encrypt: ")
-    encrypted = encrypt_message(message)
-    print(f"Encrypted Message: {encrypted}")
-    print(f"Share this key securely: {key.decode()}")
-elif choice == 2:
-    encrypted_message = input("Enter the encrypted message to decrypt: ")
-    key_input = input("Enter the shared secret key: ")
-    try:
-        custom_cipher = Fernet(key_input.encode())
-        decrypted = custom_cipher.decrypt(encrypted_message.encode()).decode()
-        print(f"Decrypted Message: {decrypted}")
-    except Exception as e:
-        print(f"Error: {e}")
-else:
-    print("Invalid choice!")
+if __name__ == '__main__':
+    app.run(debug=True)
